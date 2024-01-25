@@ -22,7 +22,14 @@ function playRound(playerSelection, computerSelection) {
     return result
 }
 
+function displayRoundAndScore(noOfRoundsRemaining, playerWinCount, computerWinCount){
+    console.log("Round: ", (5 - noOfRoundsRemaining)+1)
+    console.log("Player Won: ", playerWinCount, "\nComputer Won: ", computerWinCount)
+}
+
 function game() {
+    let playerWinCount = 0;
+    let computerWinCount = 0;
     let noOfRounds = 5;
     while (noOfRounds != 0) {
         const playerSelection = prompt("Choose - Rock, Paper, Scissor");
@@ -30,9 +37,11 @@ function game() {
         let result = playRound(playerSelection, computerSelection)
         if (result.toLowerCase() === 'win') {
             console.log(`You ${result}!, ${playerSelection} beats ${computerSelection}`);
+            displayRoundAndScore(noOfRounds, ++playerWinCount, computerWinCount);
         }
         else if (result.toLowerCase() === 'lose') {
             console.log(`You ${result}!, ${computerSelection} beats ${playerSelection}`);
+            displayRoundAndScore(noOfRounds, playerWinCount, ++computerWinCount);
         }
         else {
             console.log("Tie");
