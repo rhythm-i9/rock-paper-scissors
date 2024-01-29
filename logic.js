@@ -1,53 +1,95 @@
+let playerWinCount;
+let computerWinCount;
+let roundNumber;
+
+const rpsImagePath = { rock: './assets/images/rock.svg', paper: './assets/images/paper.svg', scissor: './assets/images/scissors.svg' };
+initializeGame()
+
+function initializeGame() {
+    playerWinCount = 0;
+    computerWinCount = 0;
+    roundNumber = 1;
+
+    document.getElementById('round-number').innerText = roundNumber;
+    document.getElementById('player-win-count').innerText = playerWinCount;
+    document.getElementById('computer-win-count').innerText = computerWinCount;
+}
+
+
 function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissor'];
     let random_index = Math.floor(Math.random() * 3)
     return choices[random_index]
 }
 
-function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
+function playRound(playerSelection) {
+    if (roundNumber>5) return; 
     let result;
-    if (playerSelection === 'rock' && computerSelection === 'paper') result = 'Lose';
-    else if (playerSelection === 'paper' && computerSelection === 'paper') result = 'Tie';
-    else if (playerSelection === 'scissor' && computerSelection === 'paper') result = 'Win';
+    let computerSelection = getComputerChoice();
 
-    else if (playerSelection === 'rock' && computerSelection === 'scissor') result = 'Win';
-    else if (playerSelection === 'paper' && computerSelection === 'scissor') result = 'Lose';
-    else if (playerSelection === 'scissor' && computerSelection === 'scissor') result = 'Tie';
+    document.getElementById('show-selection-container').style.visibility = 'visible'
 
-    else if (playerSelection === 'rock' && computerSelection === 'rock') result = 'Tie';
-    else if (playerSelection === 'paper' && computerSelection === 'rock') result = 'Win';
-    else if (playerSelection === 'scissor' && computerSelection === 'rock') result = 'Lose';
-
-    return result
+    switch (playerSelection) {
+        case computerSelection:
+            result = 'tie';
+            break;
+        case 'rock':
+            result = computerSelection === 'scissor' ? 'win' : 'lose';
+            break;
+        case 'paper':
+            result = computerSelection === 'rock' ? 'win' : 'lose';
+            break;
+        case 'scissor':
+            result = computerSelection === 'paper' ? 'win' : 'lose';
+            break;
+        default:
+            break;
+    }
+    updateGame(playerSelection, computerSelection, result);
 }
 
-function displayRoundAndScore(noOfRoundsRemaining, playerWinCount, computerWinCount){
-    console.log("Round: ", (5 - noOfRoundsRemaining)+1)
-    console.log("Player Won: ", playerWinCount, "\nComputer Won: ", computerWinCount)
-}
+function updateGame(playerSelection, computerSelection, result) {
 
-function game() {
-    let playerWinCount = 0;
-    let computerWinCount = 0;
-    let noOfRounds = 5;
-    while (noOfRounds != 0) {
-        const playerSelection = prompt("Choose - Rock, Paper, Scissor");
-        const computerSelection = getComputerChoice();
-        let result = playRound(playerSelection, computerSelection)
-        if (result.toLowerCase() === 'win') {
-            console.log(`You ${result}!, ${playerSelection} beats ${computerSelection}`);
-            displayRoundAndScore(noOfRounds, ++playerWinCount, computerWinCount);
+    document.getElementById('player-selection').src = rpsImagePath[playerSelection];
+    document.getElementById('computer-selection').src = rpsImagePath[computerSelection]
+    if (roundNumber <= 5) {
+        switch (result) {
+            case 'win':
+                playerWinCount++;
+                break;
+            case 'lose':
+                computerWinCount++;
+                break;
+            case 'tie':
+                console.log('Tie')
+                roundNumber--;
+                document.getElementById('round-result').innerText = "It's a Tie!";
+                break;
+            default:
+                break;
+
         }
-        else if (result.toLowerCase() === 'lose') {
-            console.log(`You ${result}!, ${computerSelection} beats ${playerSelection}`);
-            displayRoundAndScore(noOfRounds, playerWinCount, ++computerWinCount);
+        if (result !== 'tie') {
+            document.getElementById('player-win-count').innerText = playerWinCount;
+            document.getElementById('computer-win-count').innerText = computerWinCount;
+            document.getElementById('round-result').innerText = `Player ${result}! Player chose ${playerSelection}, Computer Chose ${computerSelection} `;
         }
-        else {
-            console.log("Tie");
-            noOfRounds++;
+        roundNumber++;
+        if (roundNumber === 6) {
+            if (playerWinCount > computerWinCount)
+                document.getElementById('game-result').innerText = "Player Wins The Game";
+            else document.getElementById('game-result').innerText = "Computer Wins The Game";
+
+            document.getElementById('game-result-container').style.visibility = 'visible'
+        } else {
+            document.getElementById('round-number').innerText = roundNumber;
         }
-        noOfRounds--;
     }
 }
-game();
+
+function playAgain(){
+    document.getElementById('show-selection-container').style.visibility = 'hidden';
+    document.getElementById('round-result').innerText = ''
+    document.getElementById('game-result-container').style.visibility = 'hidden';
+    initializeGame()
+}
