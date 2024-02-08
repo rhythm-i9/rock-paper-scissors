@@ -2,7 +2,20 @@ let playerWinCount;
 let computerWinCount;
 let roundNumber;
 
-const rpsImagePath = { rock: './assets/images/rock.svg', paper: './assets/images/paper.svg', scissor: './assets/images/scissors.svg' };
+const rpsImagePath = {
+    rock: {
+        src: './assets/images/rock.png',
+        class: "mx-auto p-6 w-24 outline outline-8 outline-[#dc3545] rounded-full "
+    },
+    paper: {
+        src: './assets/images/paper.png',
+        class: "mx-auto p-6 w-24 outline outline-8 outline-[#0d6efd] rounded-full "
+    },
+    scissor: {
+        src: './assets/images/scissors.png',
+        class: "mx-auto p-6 w-24 outline outline-8 outline-[#ffc107] rounded-full "
+    }
+};
 initializeGame()
 
 function initializeGame() {
@@ -23,7 +36,7 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection) {
-    if (roundNumber>5) return; 
+    if (roundNumber > 5) return;
     let result;
     let computerSelection = getComputerChoice();
 
@@ -50,8 +63,11 @@ function playRound(playerSelection) {
 
 function updateGame(playerSelection, computerSelection, result) {
 
-    document.getElementById('player-selection').src = rpsImagePath[playerSelection];
-    document.getElementById('computer-selection').src = rpsImagePath[computerSelection]
+    document.getElementById('player-selection').src = rpsImagePath[playerSelection].src;
+    document.getElementById('player-selection-button').className = rpsImagePath[playerSelection].class
+
+    document.getElementById('computer-selection').src = rpsImagePath[computerSelection].src
+    document.getElementById('computer-selection-button').className = rpsImagePath[computerSelection].class
     if (roundNumber <= 5) {
         switch (result) {
             case 'win':
@@ -87,7 +103,7 @@ function updateGame(playerSelection, computerSelection, result) {
     }
 }
 
-function playAgain(){
+function playAgain() {
     document.getElementById('show-selection-container').style.visibility = 'hidden';
     document.getElementById('round-result').innerText = ''
     document.getElementById('game-result-container').style.visibility = 'hidden';

@@ -9,56 +9,68 @@
 </head>
 
 <body>
-    <div class="h-screen flex flex-col justify-center bg-amber-50 gap-4">
+    <div class="h-screen flex flex-col justify-center gap-4">
         <div class="font-bold text-3xl italic font-mono text-center">Rock Paper Scissor</div>
-        <div class="p-8 flex justify-center gap-4">
-            <div class="w-1/3 space-y-8">
-                <div class="font-bold text-2xl italic font-mono text-center">Play your turn</div>
+        <div class="mx-auto w-1/3 grid grid-rows-2 grid-flow-col gap-2">
+            <div class="bg-slate-200 rounded-lg row-span-2 flex justify-center items-center">
+                <div class="font-bold text-xl italic font-mono leading-10">Round <span id="round-number" class=""></span></div>
+            </div>
+            <div class="px-4 bg-slate-200 rounded-lg font-semibold text-xl italic font-mono leading-10">
+                Player Won
+                <span id="player-win-count"></span>
+            </div>
+            <div class="px-4 bg-slate-200 rounded-lg font-semibold text-xl italic font-mono leading-10">
+                Computer Won
+                <span id="computer-win-count"></span>
+            </div>
+        </div>
+        <div class="p-8 flex justify-center gap-8">
+            <div class="w-2/5 space-y-8">
+                <div class="font-bold text-xl italic font-mono text-center">Play your turn</div>
                 <div class="flex place-content-evenly">
-                    <div class="p-6 w-24 border border-2 border-red-300 bg-red-100 rounded-lg"
+                    <div class="p-6 w-24 outline outline-8 outline-[#dc3545] rounded-full hover:shadow-lg hover:shadow-slate-900 hover:outline-red-400"
                         onclick="playRound('rock')">
-                        <img src="./assets/images/rock.svg" alt="rock_image" class="rotate-90 object-contain">
+                        <img src="./assets/images/rock.png" alt="rock_image" class="object-contain">
                     </div>
-                    <div class="p-6 w-24 border border-2 border-sky-300 bg-sky-100 rounded-lg"
+                    <div class="p-6 w-24 outline outline-8 outline-[#0d6efd] rounded-full hover:shadow-lg hover:shadow-slate-900 hover:outline-blue-400"
                         onclick="playRound('paper')">
-                        <img src="./assets/images/paper.svg" alt="paper_image" class="rotate-90 object-contain">
+                        <img src="./assets/images/paper.png" alt="paper_image" class="object-contain">
                     </div>
-                    <div class="p-6 w-24 border border-2 border-green-300 bg-green-100 rounded-lg"
-                        onclick="playRound('scissor')"><img src="./assets/images/scissors.svg" alt="scissor_image"
-                            class="rotate-90 object-contain"></div>
+                    <div class="p-6 w-24 outline outline-8 outline-[#ffc107] rounded-full hover:shadow-lg hover:shadow-slate-900 hover:outline-yellow-400"
+                        onclick="playRound('scissor')"><img src="./assets/images/scissors.png" alt="scissor_image"
+                            class="object-contain"></div>
                 </div>
                 <div id="show-selection-container" class="w-full flex justify-center space-around invisible">
                     <div class="w-1/2 space-y-4">
-                        <div class="font-bold text-2xl italic font-mono text-center">Player Selected</div>
-                        <div class="p-6 w-24 border border-2 border-red-300 bg-red-100 rounded-lg mx-auto"><img
-                                id="player-selection" src="./assets/images/rock.svg" alt="rock_image"
-                                class="rotate-90 object-contain"></div>
+                        <div class="font-bold text-xl italic font-mono text-center">Player Selected</div>
+                        <div id="player-selection-button" class="mx-auto "><img id="player-selection"
+                                src="./assets/images/rock.png" alt="rock_image" class=" object-contain"></div>
                     </div>
                     <div class="w-1/2 space-y-4">
-                        <div class="font-bold text-2xl italic font-mono text-center">Computer Selected</div>
-                        <div class="p-6 w-24 border border-2 border-red-300 bg-red-100 rounded-lg mx-auto"><img
-                                id="computer-selection" src="./assets/images/rock.svg" alt="rock_image"
-                                class="rotate-90 object-contain"></div>
+                        <div class="font-bold text-xl italic font-mono text-center">Computer Selected</div>
+                        <div id="computer-selection-button" class=" mx-auto"><img id="computer-selection"
+                                src="./assets/images/rock.png" alt="rock_image" class="object-contain"></div>
                     </div>
                 </div>
             </div>
-            <div class="p-8 w-1/5 space-y-8 my-auto rounded-lg ring-4 ring-amber-600">
-                <div class="font-bold text-2xl italic font-mono text-center">Score Board</div>
-                <div>
-                    <div class="font-bold text-2xl italic font-mono text-left leading-10">Round Number: <span
-                            id="round-number"></span></div>
-                    <div class="font-bold text-2xl italic font-mono text-left leading-10">Player Won: <span
-                            id="player-win-count"></span></div>
-                    <div class="font-bold text-2xl italic font-mono text-left leading-10">Computer Won: <span
-                            id="computer-win-count"></span></div>
-                </div>
+                <!-- <div class="p-8 space-y-8 my-auto rounded-lg ring-4 ring-amber-600">
+                    <div class="font-bold text-2xl italic font-mono text-center">Score Board</div>
+                    <div>
+                        <div class="font-bold text-2xl italic font-mono text-left leading-10">Round Number: <span
+                                id="round-number"></span></div>
+                        <div class="font-bold text-2xl italic font-mono text-left leading-10">Player Won: <span
+                                id="player-win-count"></span></div>
+                        <div class="font-bold text-2xl italic font-mono text-left leading-10">Computer Won: <span
+                                id="computer-win-count"></span></div>
+                    </div>
 
-            </div>
+                </div> -->
         </div>
-        <div id="round-result" class="font-bold text-2xl italic font-mono text-center"></div>
+        <div id="round-result" class="font-bold text-xl italic font-mono text-center"></div>
         <div id="game-result-container" class="italic font-mono text-center space-x-4 invisible">
-            <span id="game-result" class="font-bold text-3xl"></span>
-            <button class="py-2 px-4 rounded-lg bg-amber-600 text-white font-semibold text-lg" onclick="playAgain()">Play Again</button>
+            <span id="game-result" class="font-bold text-2xl"></span>
+            <button class="py-2 px-3 rounded-lg bg-amber-600 text-white font-semibold text-lg hover:shadow-lg"
+                onclick="playAgain()">Play Again</button>
         </div>
     </div>
     <script src="./logic.js"></script>
